@@ -1,0 +1,291 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'İzin Yönetimi',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# İzin Yönetim
+
+İzin yönetimi API metodları ile firmanız için `SMS_OTP` ve `SINGLE_OPT_IN` yöntemi ile KVKK Aydınlatma, KVKK'ya ilişkin açık rıza ve pazarlama izinlerini yönetebilirsiniz.
+
+<Note>
+  Hangi yöntemi kullanmanız gerektiği konusunda lütfen danışmanlarımızdan destek alınız. İzin alma seneryonuzu destek@dijiizin.com'a ilettiğiniz taktirde uzmanlarımız dönüş yapacaktır.
+</Note>
+
+### DOUBLE_OPT_IN
+<div className="not-prose">
+
+  <Button
+    href="#izin-islemi-baslatma"
+    variant="text"
+    arrow="right"
+    children="İzin İşlemi Başlatma"
+  />
+</div>
+<div className="not-prose">
+  <Button
+      href="#izin-islemi-onaylama"
+      variant="text"
+      arrow="right"
+      children="İzin İşlemi Onaylama"
+    />
+
+</div>
+ ### SINGLE_OPT_IN
+<div className="not-prose">
+
+  <Button
+      href="#izin-alma"
+      variant="text"
+      arrow="right"
+      children="İzin Alma"
+    />
+
+</div>
+
+
+
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## İzin İşlemi Başlatma {{ parameter: 'POST' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/double-opt-in/consent" />
+
+    ### Açıklama
+
+Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarılı gerçekleşen istek sonrasında, 10 dakika içerisinde  [İzin İşlemi Onaylama](#izin-islemi-onaylama) işlemi gerçekleştirilmelidir. Aksi taktirde bu endpointe yeni istek göndererek yeni izin alma işlemi başlatılmalıdır. İzin işlemi başlatıldıktan sonra 1 ile 180 saniye arasında Girilen telefon numarasına ONAY SMS’i içerisinde 2 adet kod ve hukuki metinler gönderilecektir.
+
+### Parametreler
+ <Properties>
+       <Property name="Environment " type="string" desc="zorunlu">
+         İznin hangi elektronik ortamda alındığını belirtir.
+         Zorunlu değerler: `HS_EORTAM`, `HS_WEB`, `HS_MOBIL`, `HS_MESAJ`, `HS_EPOSTA`, `HS_CAGRI_MERKEZI`, `HS_SOSYAL_MEDYA`
+         Değerlerinden biri seçilmelidir.
+
+       </Property>
+       <Property name="ConsentTime" type="date d-m-Y H:i:s " desc="zorunlu">
+        İznin alındığı tarihi ifade eder. `DD-MM-YYYY HH:mm:ss``formatıdna olmalıdır. Örn: 27-12-2022 02:25:12
+       </Property>
+       <Property name="Description" type="string" desc="zorunlu">
+        İzin alma sırasında gönderilen açıklama alanıdır.
+       </Property>
+       <Property name="Url" type="string" desc="opsiyonel">
+        İzin alma işleminin başladığı bağlantı adresidir. **Eğer izin alma işlemi bir web sayfası üzerinde başlatılıyorsa gönderilmesi gereklidir**
+       </Property>
+       <Property name="PersonalInfo">
+        PersonalInfo'nun istek içerisinde yer alması zorunludur. Ad Soyad alanı mutlaka doldurulmalıdır. Alınacak izinlere göre Phone ve Email alanlarından birini doldurmak yeterli olabilir.
+        </Property>
+       <Property name="PersonalInfo.Phone" type="string" desc="opsiyonel zorunlu">
+        ContactConsents bölümünde Sms veya Call izinleri “ONAY” durumunda gönderildiğinde doldurulması zorunludur. Başında 0 oladan 10 haneli olarak gönderilmelidir.
+       </Property>
+       <Property name="PersonalInfo.Email" type="string" desc="opsiyonel zorunlu">
+        ContactConsents bölümünde Email “ONAY” durumunda gönderildiğinde doldurulması zorunludur. E-posta formatına uygun olarak gönderilmelidir.
+       </Property>
+       <Property name="DocumentConsents.KVKK" desc="zorunlu" >
+       Kişinin kaydedilecek KVKK izinlerini ifade eder. İçerisinde dijiizin’den alacağınız KVKK metninize ilişikin DocumentId değeri ve eğer bu izni web de bulunan kişinin doldurduğu bir form üzerinden alıyorsanız aynı DocumentId değerine sahip metnin bir kopyasının bulunduğu DocumentUrl bulunmalıdır.
+       </Property>
+       <Property name="DocumentConsents.RIZA" desc="zorunlu" >
+        Kişinin kaydedilecek KVKK’ya ait açık rıza izinlerini ifade eder. İçerisinde dijiizin’den alacağınız Açık Rıza metninize ilişikin DocumentId değeri ve eğer bu izni web de bulunan kişinin doldurduğu bir form üzerinden alıyorsanız aynı DocumentId değerine sahip metnin bir kopyasının bulunduğu DocumentUrl bulunmalıdır.
+       </Property>
+       <Property name="ContactConsents"  desc="zorunlu">
+        Eğer kişiye ilişkin pazarlama izinlerini almak istiyorsanız ContactConsent parametresi gönderilmelidir.
+       </Property>
+       <Property name="ContactConsents.Type" type="string" desc="zorunlu">
+        İznin ticari veya bireysel olup olmadığını ifade eder. Ticari izinler için `TACIR` bireysel izinler için `BIREYSEL` olarak değer gönderilmelidir. `ContactConsents` parametresi gönderildiği taktirde bu alanın gönderilmesi **zorunludur.**
+       </Property>
+       <Property name="ContactConsents.Sms" type="string"  desc="opsiyonel">
+        Kişinin MESAJ pazarlama iznini ifade eder. **Değeri Boş gönderilemez.** Değeri `ONAY` olmalıdır. SMS pazarlama izni **alınmayacaksa** parametre istek içerisinde **yer almamalıdır.**
+       </Property>
+       <Property name="ContactConsents.Call" type="string"  desc="opsiyonel">
+        Kişinin ARAMA pazarlama iznini ifade eder. Değeri Boş gönderilemez. Değeri ONAY olmalıdır. ARAMA pazarlama izni **alınmayacaksa** parametre istek içerisinde **yer almamalıdır.**
+       </Property>
+       <Property name="ContactConsents.Email" type="string"  desc="opsiyonel">
+       Kişinin EPOSTA pazarlama iznini ifade eder. Değeri Boş gönderilemez. Değeri `ONAY` olmalıdır. EPOSTA pazarlama izni **alınmayacaksa** parametre istek içerisinde **yer almamalıdır.**
+       </Property>
+       <Property name="ContactConsents.ETK"  desc="opsiyonel zorunlu">
+        Kişinin kaydedilecek ETK’ya ait açık rıza izinlerini ifade eder. İçerisinde dijiizin’den alacağınız ETK metninize ilişikin DocumentId değeri ve eğer bu izni web de bulunan kişinin doldurduğu bir form üzerinden alıyorsanız aynı DocumentId değerine sahip metnin bir kopyasının bulunduğu DocumentUrl bulunmalıdır. `ContactConsents` parametresi gönderildiği taktirde bu alanın gönderilmesi zorunludur.
+       </Property>
+       <Property name="BranchAccess"  desc="opsiyonel">
+        Kişiye ve izinlerine erişim izni vereceğiniz şubeleri ifade eder. İstek gövdesinde yer alması zorunlu değildir. İletildiğinde dizi olarak brand_id değerleri gönderilmelidir. `BranchId` değerleri gönderildiğinde, Firma ana yetklisi dışında sadece gönderilen **BranchId değerine karşılık gelen şubenin kullanıcıları bu kişiye erişim sağlayabilecektir.**
+       </Property>
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/sms/send/multiple' }}
+    {
+      "Environment": "HS_EORTAM",
+      "PersonalInfo": {
+        "Name": "Ad",
+        "Surname": "Soyad",
+        "Phone": "5360000000",
+        "Email": "destek@dijiizin.com"
+      },
+      "ConsentTime": "27-12-2022 02:25:12",
+      "Description": "Bu izin demowebsite.com üzerinden yeni üyelik sırasında ile alındı",
+      "Url": "dijiizin.com/yeni-uyelik",
+      "DocumentConsents": {
+        "KVKK": {
+          "DocumentId": 6004,
+          "DocumentUrl": "https://demowebsite.com/kvkk"
+        },
+        "RIZA": {
+          "DocumentId": 6001,
+          "DocumentUrl": "http://demowebsite.com/acikriza"
+        }
+      },
+      "ContactConsents": {
+        "Type": "BIREYSEL",
+        "Sms": "ONAY",
+        "Call": "ONAY",
+        "Email": "ONAY",
+        "ETK": {
+          "DocumentId": 6002,
+          "DocumentUrl": "https://demowebsite.com/etk"
+        }
+      },
+      "BranchAccess": [
+        10580946,
+        10580947
+      ]
+    }
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "status": "talebiniz alındı",
+        "requestId": "bb844f8e-0286-480c-a20a-7684d2921234"
+    }
+
+
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+---
+<Row>
+
+  <Col>
+  ## İzin İşlemi Onaylama - DOUBLE_OPT_IN {{ parameter: 'POST' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/double-opt-in/consent" />
+
+    ### Açıklama
+
+Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarılı gerçekleşen istek sonrasında, 10 dakika içerisinde  [İzin İşlemi Onaylama](#izin-islemi-onaylama) işlemi gerçekleştirilmelidir. Aksi taktirde bu endpointe yeni istek göndererek yeni izin alma işlemi başlatılmalıdır. İzin işlemi başlatıldıktan sonra 1 ile 180 saniye arasında Girilen telefon numarasına ONAY SMS’i içerisinde 2 adet kod ve hukuki metinler gönderilecektir.
+
+### Parametreler
+ <Properties>
+
+       <Property name="requestId" type="string " desc="zorunlu">
+        Başarı ile gerçekleşen İzin İşlemi Başlatma metodu cevabından dönen isteğinize ait tanımlayıcı `uuid` değeridir.
+       </Property>
+       <Property name="kvkkCode" type="string" desc="zorunlu">
+        Kişinin telefonuna SMS ile gönderilen 1. Kod olan KVKK ONAY kodunda yazan değerdir. KVKK Onayı alınması için kullanılır. KVKK kodu olmadan kişi kaydı yapılamaz.
+       </Property>
+       <Property name="etkCode" type="string" desc="opsiyonel">
+        Kişinin telefonuna SMS ile gönderilen 2. Kod olan ETK ONAY kodunda yazan değerdir. ETK onay kodu ile pazarlama izinleri ve ETK metin izini kayıt edilir.
+       </Property>
+
+
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/double-opt-in/consent/confirmation' }}
+    {
+        "requestId":"48f833a6-67ec-4647-96fc-3a7ce3c6d815",
+        "kvkkCode":"180546",
+        "etkCode":"184287"
+    }
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "status": "talebiniz alındı",
+        "requestId": "bb844f8e-0286-480c-a20a-7684d2921234"
+    }
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+
+
+---
+
+

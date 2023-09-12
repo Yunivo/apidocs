@@ -1,0 +1,43 @@
+
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+  title: 'API Dokümantasyonu - Dijiizin',
+  description:
+    'Dijiizin API hakkında bilmeniz gereken her şeyi öğrenin ve Dijiizin´i ürününüze entegre edin.',
+}
+
+export const sections = [
+  { title: 'Giriş', id: 'giris' },
+  /* { title: 'Resources', id: 'resources' }, */
+]
+
+<HeroPattern />
+
+# Dijiizin API Dokümantasyonu
+
+Bu dokümantasyon Dijiizin’in sunduğu İYS entegrasyonu, Aydınlatma yükümlülüğü sorumlulukları, Açık Rıza toplama konusunda canlı ortamlarına ilişkin veriler içermektedir. Dijiizin API’yi kullanabilmek için Dijiizin müşterisi olarak hesaplarınızın kurulmuş olması gerekmektedir. {{ className: 'lead' }}
+
+<div className="not-prose mb-16 mt-6 flex gap-3">
+  <Button href="/hizli-baslangic" arrow="right" children="Hızlı Başlangıç" />
+  <Button href="/tanimlar" variant="outline" children="Tanımlar" />
+</div>
+
+## Giriş {{ anchor: true }}
+
+Bu dokümanda İleti Yönetim Sistemi İş Ortağı olan Dijiizin tarafından sunulan API'nin açıklamaları, güvenlik kısıtları ve kullanım örnekleri sunulmaktadır.
+API, Farklı yazılım uygulamalarının birbirleriyle etkileşime geçmelerine olanak sağlayan servis çözümüdür.
+Dijiizin API gelişen ve değişen ihtiyaçlara göre güncellenir ve güncel sürümleri müşterilerin  erişimine dokümantasyonlar üzerinden sunulur. Yapılan güncellemeler, https://apidocs.dijiizin.com üzerinden duyurulacaktır. Sunduğumuz API’yi kullanarak, Dijiizin üzerinden hizmet alan hizmet sağlayıcılar izinli verilerini İleti Yönetim Sistemine, yasal mevzuatlara uygun bir şekilde aktarabilecek, Aydınlatma yükümlülüğünü yerine getirdiğini kanıtlayabilecek ve Elektronik Açık Rıza toplayarak kanıt dosyaları ve logları edinebilecektir.
+Tüm metotların HTTP istek ve cevap mesajlarında JSON söz dizim standardı kullanılmıştır. Güvenli API‘lerin erişiminde oAuth 2.0 protokolü takip edilmektedir. Bu doğrultuda oluşturulan access_token’lar Bearer token olarak kullanılarak İzin Yönetim, KVKK ve Açık Rıza istemlerinde güvenli veri alışverişi sağlanmaktadır. Kullanıcı bilgileriniz ile https://dijiizin.com/giris üzerinden sisteme giriş yaptıktan sonra, Hesap bölümüne girerek API Bilgileri bölümünden API Kullanıcısı oluşturmanız gerekmektedir.{{ className: 'lead' }}
+
+<div className="not-prose">
+  <Button
+    href="https://dijiizin.com/user/api-bilgileri"
+    variant="text"
+    target="_blank"
+    arrow="right"
+    children="Api Kullanıcı Bilgilerinizi Alın"
+  />
+</div>
+
+

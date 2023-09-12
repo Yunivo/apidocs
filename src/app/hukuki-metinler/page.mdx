@@ -1,0 +1,195 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'Hukuki Metinler',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# Hukuki Metinler
+
+Dijiizinde Hukuki metinleri için versiyonlama sistemi kullanılır. Güncellenen metinler `kullanımda` veya `eski` olarak nitelendirilir. Burada hukuki metinleriniz arasında güncel ve kullanımda olanları çekebileceğiniz endpointler bulunmaktadır.
+
+<div className="not-prose">
+  <Button
+    href="#hukuki-metin-listeleme"
+    variant="text"
+    arrow="right"
+    children="Hukuki Metin Listeleme"
+  />
+</div>
+<div className="not-prose">
+  <Button
+    href="#hukuki-metin-sorgulama"
+    variant="text"
+    arrow="right"
+    children="Hukuki Metin Sorgulama"
+  />
+</div>
+
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## Hukuki Metin Listeleme {{ parameter: 'GET' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="GET" url="https://api.dijiizin.com/api/V3/legal/text/list" />
+
+    ### Açıklama
+
+    Dijiizin üzerinde yönettiğiniz kullanımda olan hukuki metinleri bu endpoint üzerinden listeleyebilirsiniz. `GET` Methodu ile kullanımda olan metinleri listeleyebilirsiniz. Eğer KVKK, ETK ve ACIKRIZA metinler tarafınıza dönmüyorsa **lütfen Dijiizin ekibi ile iletişime geçiniz.** Daha sonra kullancağınız izin alma yöntemlerinde bu metinler kullanılacaktır.
+
+    ### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+
+
+
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'İstek Adresi','tag':'GET','label':'https://api.dijiizin.com/api/V3/legal/text/list' }}
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    [
+        {
+            "type": "ETK",
+            "id": 632131,
+            "version": 1.01,
+            "in_use": true
+        },
+        {
+            "type": "KVKK",
+            "id": 633132,
+            "version": 1.01,
+            "in_use": true
+        },
+        {
+            "type": "ACIKRIZA",
+            "id": 650156,
+            "version": 1.02,
+            "in_use": true
+        }
+    ]
+    ```
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+        {
+            "error": "Bilinmeyen hata"
+        }
+        ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+---
+
+<Row>
+
+  <Col>
+  ## Hukuki Metin Sorgulama {{ parameter: 'GET' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="GET" url="https://api.dijiizin.com/api/V3/legal/text/{text_id}" />
+
+    ### Açıklama
+
+    Belirli bir hukuki metninizin versiyonunu, tipini ve içeriğini edinmek istediğinizde kullanabileceğiniz "Hukuki Metin Sorgulama" methodu ile websitenize veya kullanmak istediğiniz alanlara güncel metinlerinizi çekebilirsiniz. İzin alma metodlarında güncel metin versiyonlarını edinmek ve ve kullanıcıya gösterilen hukuki metinle, API'lara gönderilen `text_id` leri eşleştirmek eşleştirmek için kullanılması önerilir.
+
+    ### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+       ### Parametreler
+    <Properties>
+      <Property name="text_id" type="integer">
+        Bilgilerini almak istediğiniz hukuki metne ait id değeri. Hukuki Metin Listeleme metodundan veya Dijiizin paneli üzerinden alınabilir.
+      </Property>
+
+
+
+    </Properties>
+
+
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'İstek Adresi','tag':'GET','label':'https://api.dijiizin.com/api/V3/legal/text/{text_id}' }}
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "id": 632,
+        "type": "ETK",
+        "version": 1.01,
+        "content": "<p>Metnin tamamı burada <html> etiketleri ile birlikte görüntülenecektir.</p>"
+    }
+    ```
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+    ```bash {{ title: '422', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "errors": [
+            {
+                "message": "Belirtilen hukuki metin bulunamadı.",
+                "code": "L102"
+            }
+        ]
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+        {
+            "error": "Bilinmeyen hata"
+        }
+        ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+
+---
+
+

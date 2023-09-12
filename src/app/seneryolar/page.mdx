@@ -1,0 +1,51 @@
+export const metadata = {
+  title: 'Quickstart',
+  description:
+    'This guide will get you all set up and ready to use the Protocol API. We’ll cover how to get started an API client and how to make your first API request.',
+}
+
+
+
+
+# Kullanım Seneryoları
+
+
+
+
+
+
+
+## Dijiizin Paneli Üzerinden
+
+### İzin Alma
+
+- **SMS OTP:** Dijiizin paneli üzerinden “İzin Al -> Kod Göndererek” sayfasına giderek özel olarak oluşturulmuş standart izin alma formu ile Double Opt-in in yöntemi ile izin alınabilir. (KVKK, Pazarlama İzinleri)
+- **SMS FORM:** Dijiizin paneli üzerinden “İzin Al -> SMS Form İle” sayfasına giderek kullanıcının telefonuna izin formu gönderilebilir. (KVKK, Pazarlama İzinleri)
+- **YÖNLENDİRMELİ FORM:** Dijiizin paneli “Yönlendirmeli Form” yönlendirme linki belirlenerek bir form oluşturulur. Bu form doldurulduktan sorna belirlenen sayfaya yönlendirilir. (KVKK, Pazarlama İzinleri)
+
+### SMS Kampanyaları
+
+- **SMS Gönderme:** Dijiizin paneli üzerinden SMS Gönder -> Yeni Kampanya Oluştur sayfasına giderek, SMS kampanyası oluşturularak tekil veya toplu sms kampanyası gönderilebilir. SMS kampanyaları ileri tarihe planlanabilir.
+- **SMS Kampanyaları:** Gönderim durumlarını kontrol ederek, ileri tarihli gönderimler için iptal işlemi yapılabilir.
+- **SMS İletim Raporu:** Sms Kampanyaları sayfasından gönderim yaptığınız listenin iletim raporuna ulaşabilirsiniz. Rapor 15 dakika sonrasında oluşur ve tıklanabilir duruma gelir.
+
+
+<div className="not-prose">
+  <Button
+    href="https://dijiizin.com"
+    variant="text"
+    arrow="right"
+    children="Hemen Dijiizin'e giderek platformu kullanmaya başlayın"
+  />
+</div>
+
+## Dijiizin API'larını Kullanarak
+
+Müşterilerinizin izinlerini, firmanızın sahip olduğu web site veya mobil uygulama gibi yazılımlar üzerinden toplayabilirsiniz. Yazılımlarınızı Dijizin API ile entegre ederek izinli datanızı oluşturabilir, ETK, KVKK ve Açık Rıza izin süreçlerinizi yasal mevzuata uygun bir şekilde Dijiizin tarafında sürdürebilirsiniz. Yasal mevzuat, kanun, tüzük konusundaki ihtiyaçlarınız Dijiizin tarafından karşılanacaktır.
+Bu çözüm çoğunlukla müşteri üyeliği veya login işlemi olan sistemlerde üyelik veya login işleminde müşterinizi izinli veritabanınıza kaydetmek için kullanılır. Müşteri, bilgilerini girip, izin onay kutucuklarını  ( KVKK, ETK ve Açık Rıza ) işaretledikten sonra, tek metodun farklı şekillerde çağırılması ile double-opt-in veya single opt-in yöntemi ile izinleri toplanabilir. Single opt-in yönteminin doğru bir şekilde gerçekleşmesinin hemen ardından, double opt-in yöntemi kullanımından sonra onay kodunun ilgili metoda iletilmesi ve doğrulanmasının hemen ardından, kişiye izinli veritabanı kaydı sonrasında izinlerinin alındığı ve çıkma hakkını kullanabilmesi adına, çıkış linki veya red sms çıkış noktasını içeren bilgilendirme mesajı gönderilir.
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'Şube Yönetimi',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# Şube Yönetimi
+
+Dijiizin tarafında farklı mağaza, lokasyon gibi durumlar için oluşturduğunuz şubelerinizin bilgilerini edinmek için kullanılır.
+
+<div className="not-prose">
+  <Button
+    href="#sube-listeleme"
+    variant="text"
+    arrow="right"
+    children="Şube Listeleme"
+  />
+</div>
+
+
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## Şube Listeleme {{ parameter: 'GET' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="GET" url="https://api.dijiizin.com/api/V3/brand/branch/list" />
+
+    ### Açıklama
+
+    Dijiizin üzerinde yönettiğiniz şubeleri bu endpointi kullanarak listeleyebilirsiniz. `GET` Methodu ile aktif durumda olan şubeleri listeleyebilirsiniz.
+
+    ### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+    ### Not
+
+Eğer dijiizin üzerinde şubeleri kullanmaktaysanız bu metodu kullanarak izin alma metodlarınızda `BranchAccess` array parametresini istek içerisinde göndererek  şube kullanıcılarının bu kişiyi ve kayıt edilen izinleri görütülemesini sağlayabilirsiniz.
+
+
+
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'İstek Adresi','tag':'GET','label':'https://api.dijiizin.com/api/V3/brand/branch/list' }}
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    [
+        {
+            "BranchId": 6252,
+            "BranchName": "Kadıköy Mağazası"
+        },
+        {
+            "BranchId": 6248,
+            "BranchName": "Beylikdüzü Mağazası"
+       }
+    ]
+    ```
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+        {
+            "error": "Bilinmeyen hata"
+        }
+        ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+
+
+---
+
+

@@ -1,0 +1,121 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'Kimlik Doğrulama - Jeton Alma',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# Kimlik Doğrulama
+
+Dijiizin.com üzerinde Ana kullanıcı ile https://dijiizin.com/user/api-bilgileri sayfasından API kullanıcısı oluşturulur. API şifresi, kullanıcı oluşturma esnasında bir defaya mahsus olarak oluşturulur ve size gösterilir. Eğer API şifrenizi kaydetmediyseniz, mevcut şifreyi yenileyebilir veya kullanıcınızı silerek yeniden oluşturabilirsiniz. API şifresi tarafınızdan belirlenemez. Şifrenize Dijiizin ekibi dahil, sizden başkası erişemez ve görüntüleyemez.
+
+### Parametreler
+<Table data={[
+  { "Parametre": "username", "Type": "Required", "Açıklama": "API Kullanıcı adı" },
+  { "Parametre": "password", "Type": "Required", "Açıklama": "API Kullanıcı Şifresi" }
+]} />
+
+Dijiizin panelinden oluşturduğunuz api kullanıcı adınız ve şifreyle access_token alınabilecektir. Çağrının sonucunda dönen mesajın bir örneği aşağıdaki gibidir.
+
+
+```json
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciO",
+    "token_type": "bearer",
+    "expires_in": 7200
+}
+```
+
+
+
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## Jeton Alma {{ parameter: 'POST' }}
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/login" />
+       ### Parametreler
+    <Properties>
+      <Property name="username" type="string">
+        Dijiizin API kullanıcı adınız.
+      </Property>
+      <Property name="password" type="string">
+        Dijiizin API kullanıcı şifreniz.
+      </Property>
+
+
+    </Properties>
+
+    ### Açıklama
+
+    API'a login olduktan sonra size döndürülen `access_token` değerini diğer endpointlere istek yaparken **Bearer Token** olarak kullanmalısınız.
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek istek gövdesi','tag':'POST','label':'https://api.dijiizin.com/api/V3/login' }}
+    {
+        "username": "KullanıcıAdı",
+        "password": "Parola"
+    }
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiTY5NDM2MTYyOCmnL3yQqWgocbDkJQe2nv1pWpbJEtIAKTD6p0WYCMFlkyV0PcBkiq_9Sp1YZJpfg07cclXKPBPN_i6w6aPGYfrfJBVlq-AGz1ew-ysBISppLKfZa03VDcjhhn9Ap3p_qcW7FKVi9iErSNOoCaeQHTeyKC-Eia7ACn_fXOM1dy4eJF1OBymtU8xFVy78C64pKoqQn4tf6Z5TatimG9jiz5dN_Ga3RJrgHj3HblbHPaoJo2XlB9FOpLcVFIKwCEJB2kCXYK-jPONaL9YhU3zPsQnx-QCnk3Ix3BpP9dMvaC0JlZEoQSzkcJV4X_aHbQifn72tHKaIXuqJ5C-E39QKmJx0PNhmByFxk3PrcF8Su1LxVDoSRrABChG2nxABCcgPeluAf3eGIoRq6_deY_GB68rwpUH23CMTZTWeqYuFm3oxH1z_UZmVou8zRAsQDj1rrBjTJbXeJjnjg_YR9ZlskQbEmibtvUXFe875yH7FU9JjRzrHeMxfaoRP7MIKeqv9tmAt0Cc7_uX6HuZfVrg6mJBToJK5u1iit9sa9mzWjlyJb_ZYeDmSvY0ihFzTT4IOW5w",
+        "token_type": "bearer",
+        "expires_in": 14400
+    }
+    ```
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Yetkisiz işlem"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+        {
+            "error": "Bilinmeyen hata"
+        }
+        ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+
+
+---
+
+API Entegrasyonunuza hızlı bir başlangıç yapmak ister misiniz?
+
+<div className="not-prose">
+  <Button
+    href="/hizli-baslangic"
+    variant="text"
+    arrow="right"
+    children="Hızlı başlangıç klavuzu çok işinize yarayacak"
+  />
+</div>
+
+---
+
+

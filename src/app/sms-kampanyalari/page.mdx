@@ -1,0 +1,150 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'SMS Kampanyaları',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# SMS Kampanyaları
+
+SMS Kampanyaları oluşturabilir, toplu ve ileri tarihli sms gönderimi yapabilirsiniz. Oluşturduğunuz SMS Kampanyaları raporlarına ve iletim raporlarına ilgili metodlar üzerinden erişebilirsiniz.
+
+<Note>
+  İleri tarihli SMS Kampanyaları panel üzerinden iptal edilebilir. Yakın zamanda API'a eklenecektir.
+</Note>
+
+
+<div className="not-prose">
+  <Button
+    href="#sms-gonderimi"
+    variant="text"
+    arrow="right"
+    children="SMS Gönderimi"
+  />
+</div>
+
+
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## SMS Gönderimi {{ parameter: 'POST' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/sms/send/multiple" />
+
+    ### Açıklama
+
+Bu API, kullanıcılara, hem tekli hem de toplu olarak SMS gönderme yeteneği sunar. Bu hizmet, işletmelerin ve organizasyonların müşterileriyle veya üyeleriyle hızlı ve etkili bir şekilde iletişim kurmalarını sağlar. API'nin sunabileceği ana özellikler şunlardır:
+
+- İleri tarihli sms gönderimi
+
+- Anında sms göndeirmi
+
+- Başlıklı sms gönderimi
+
+- Toplu ve tek kişiye sms gönderimi
+
+### Kurallar
+
+- Boş sms gönderilemez
+- Son 2 dakika içinde aynı sms gönderilemez
+---
+### Parametreler
+ <Properties>
+       <Property name="Title" type="string" desc="zorunlu">
+         Onaylanan mesaj başlığınızdır.
+       </Property>
+       <Property name="Phone" type="array" desc="zorunlu">
+        Mesaj gönderilecek telefon numarasıdır. Başında 0 olmadan gönderilmesi gerekmektedir. Dizi şeklinde iletilmelidir.
+       </Property>
+       <Property name="SendTime" type="date d-m-Y H:i" >
+        Opsiyonel bir parametredir. Mesajın gönderileceği ileri bir tarihi işaret eder. İleri tarih ve saat gönderildiğinde sistem zamanı geldiğinde sistem mesajı otomatik olarak yollar. Eğer geçmiş zamanı gösteren bir tarih bilgisi yollanırsa sistem SMS'i bekletmeden gönderir.
+       </Property>
+       <Property name="Message" type="array" desc="zorunlu">
+        SMS içerisinde yer alacak mesajdır.
+       </Property>
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+### Not
+
+Başarılı cevapta döndürülen `transactionCode` değeri işleminize ait işlem numarasıdır. Bu numara ile **işlem iptali** gerçekleştirebilir veya **işlem raporlarını** edinebilirsiniz.
+
+**İleri tarihli** gönderilen sms kampanyaları **iptal edilebilir.**
+
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/sms/send/multiple' }}
+    {
+        "Title": "TESTBASLIK",
+        "Phone": [
+            "5321000000",
+            "5321000001",
+        ],
+        "SendTime":"26-01-2022 09:30",
+        "Message": "TESTMESAJ"
+    }
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "status": "İşlem başarılı",
+        "message": "Mesajlar gönderildi",
+        "TransactionCode": "35593682"
+    }
+
+    ```
+
+     ```bash {{ title: '200-2', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+     {
+         "status": "İşlem başarılı",
+         "message": "Mesajlar gönderilmek üzere kayıt edildi",
+         "transactionCode": "35669525"
+     }
+
+
+      ```
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+
+
+---
+
+

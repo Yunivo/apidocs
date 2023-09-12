@@ -1,0 +1,65 @@
+import clsx from 'clsx'
+
+const variantStyles = {
+  small: '',
+  medium: 'rounded-lg px-1.5 ring-1 ring-inset',
+}
+
+const colorStyles = {
+  green: {
+    small: 'text-green-500 dark:text-green-400',
+    medium:
+      'ring-green-300 dark:ring-green-400/30 bg-green-400/10 text-green-500 dark:text-green-400',
+  },
+  blue: {
+    small: 'text-blue-500',
+    medium:
+      'ring-blue-300 bg-sky-400/10 text-blue-500 dark:ring-blue-400/30 dark:bg-blue-400/10 dark:text-blue-400',
+  },
+  amber: {
+    small: 'text-amber-500',
+    medium:
+      'ring-amber-300 bg-amber-400/10 text-amber-500 dark:ring-amber-400/30 dark:bg-amber-400/10 dark:text-amber-400',
+  },
+  rose: {
+    small: 'text-red-500 dark:text-rose-500',
+    medium:
+      'ring-rose-200 bg-rose-50 text-red-500 dark:ring-rose-500/20 dark:bg-rose-400/10 dark:text-rose-400',
+  },
+  zinc: {
+    small: 'text-zinc-400 dark:text-zinc-500',
+    medium:
+      'ring-zinc-200 bg-zinc-50 text-zinc-500 dark:ring-zinc-500/20 dark:bg-zinc-400/10 dark:text-zinc-400',
+  },
+}
+
+const valueColorMap = {
+  GET: 'green',
+  POST: 'amber',
+  PUT: 'blue',
+  DELETE: 'rose',
+}
+
+
+
+export function Tag({
+  children,
+  variant = 'medium',
+  color = valueColorMap[children] ?? 'emerald',
+}) {
+
+
+  return (
+
+    <span
+      className={clsx(
+        'font-mono select-none text-[0.9rem] font-semibold leading-6',
+        variantStyles[variant],
+        colorStyles[color][variant],
+
+      )}
+    >
+      {children}
+    </span>
+  )
+}
