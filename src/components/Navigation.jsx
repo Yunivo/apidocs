@@ -260,8 +260,8 @@ export function Navigation(props) {
           />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
-          <Button href="#" variant="filled" className="w-full">
-            Sign in
+          <Button href="https://dijiizin.com/giris" variant="filled" className="w-full">
+            Dijiizin'e Giriş Yap
           </Button>
         </li>
       </ul>
