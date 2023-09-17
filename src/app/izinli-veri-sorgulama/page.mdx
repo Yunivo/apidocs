@@ -23,10 +23,10 @@ export const metadata = {
 </div>
 <div className="not-prose">
   <Button
-      href="#kvkk-izinleri-sorgulama"
+      href="#kisi-izinleri"
       variant="text"
       arrow="right"
-      children="Kvkk izinleri sorgulama"
+      children="Kişi Sorgulama"
     />
 
 </div>
@@ -77,7 +77,7 @@ Bu method ile belirtilen `consentType` ve `status` değerleri ile birlikte verit
 
  <Table data={[
      { "Parametre": "type", "Açıklama": "İzin türü (MESAJ, ARAMA, EPOSTA)" },
-     { "Parametre": "password", "Açıklama": "İzin durumu (ONAY, RET)" },
+     { "Parametre": "status", "Açıklama": "İzin durumu (ONAY, RET)" },
      { "Parametre": "list", "Açıklama": "sorgulanan alıcı listesi" },
      { "Parametre": "pagination.current_page", "Açıklama": "Bulunduğunuz sayfa numarası" },
      { "Parametre": "pagination.last_page", "Açıklama": "Toplam sayfa sayısı" },
@@ -154,28 +154,23 @@ Bu method ile belirtilen `consentType` ve `status` değerleri ile birlikte verit
 <Row>
 
   <Col>
-  ## KVKK İzinleri Sorgulama  {{ parameter: 'GET' }}
+  ## Kişi Sorgulama  {{ parameter: 'GET' }}
 
 
   ### Endpoint URL
-    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/double-opt-in/consent" />
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/person/{uuid}" />
 
-    ### Açıklama
+  ### Açıklama
 
-Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarılı gerçekleşen istek sonrasında, 10 dakika içerisinde  [İzin İşlemi Onaylama](#izin-islemi-onaylama) işlemi gerçekleştirilmelidir. Aksi taktirde bu endpointe yeni istek göndererek yeni izin alma işlemi başlatılmalıdır. İzin işlemi başlatıldıktan sonra 1 ile 180 saniye arasında Girilen telefon numarasına ONAY SMS’i içerisinde 2 adet kod ve hukuki metinler gönderilecektir.
+Bu method belirtilen `uuid`'ye sahip bir kişinin detaylı bilgilerini getirir.
 
 ### Parametreler
  <Properties>
 
-       <Property name="requestId" type="string " desc="zorunlu">
-        Başarı ile gerçekleşen İzin İşlemi Başlatma metodu cevabından dönen isteğinize ait tanımlayıcı `uuid` değeridir.
+       <Property name="uuid" type="string " desc="zorunlu">
+        İlgili kişinin eşsiz tanımlayıcısıdır. Başarılı izin alma işlemleri sonrasında döndürülür. (UUID) olarak kullanılır.
        </Property>
-       <Property name="kvkkCode" type="string" desc="zorunlu">
-        Kişinin telefonuna SMS ile gönderilen 1. Kod olan KVKK ONAY kodunda yazan değerdir. KVKK Onayı alınması için kullanılır. KVKK kodu olmadan kişi kaydı yapılamaz.
-       </Property>
-       <Property name="etkCode" type="string" desc="opsiyonel">
-        Kişinin telefonuna SMS ile gönderilen 2. Kod olan ETK ONAY kodunda yazan değerdir. ETK onay kodu ile pazarlama izinleri ve ETK metin izini kayıt edilir.
-       </Property>
+
 
 
 
@@ -187,24 +182,68 @@ Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarıl
        Authentication: Bearer <jeton>
     ```
 
+ <Table data={[
+     { "Parametre": "name", "Açıklama"    : "Kişinin adı" },
+     { "Parametre": "surname", "Açıklama" : "Kişinin soyadı" },
+     { "Parametre": "phone", "Açıklama"   : "Kişinin telefon numarası" },
+     { "Parametre": "email", "Açıklama"   : "Kişinin eposta adresi" },
+     { "Parametre": "contactConsents",   "Açıklama": "Kişinin pazarlama izinleri durumu" },
+     { "Parametre": "legalTextConsents", "Açıklama": "Kişiye kayıtlı hukuki metin onayları" },
+     { "Parametre": "branchAccess",      "Açıklama": "Erişim verilen şubeler. Eğer herhangi bir şubeye atanmamış ise istek içerisinde gönderilmez" }
+   ]} />
+
 
   </Col>
   <Col sticky>
 
-    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/double-opt-in/consent/confirmation' }}
-    {
-        "requestId":"48f833a6-67ec-4647-96fc-3a7ce3c6d815",
-        "kvkkCode":"180546",
-        "etkCode":"184287"
-    }
-
-    ```
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/person/{uuid}' }}
+       ```
     <CodeGroup  title="Örnek Response" >
 
     ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
     {
-        "status": "Kişi kayıt edildi",
-        "uuid": "bb844f8e-0286-480c-a20a-7684d2921234"
+        "name": "Ahmet",
+        "surname": "Öztürk",
+        "phone": "+905361000000",
+        "email": "destek@dijiizin.com",
+        "contactConsents": [
+            {
+                "recipient": "+905361000000",
+                "type": "MESAJ",
+                "status": "ONAY"
+            },
+            {
+                "recipient": "destek@dijiizin.com",
+                "type": "EPOSTA",
+                "status": "ONAY"
+            },
+            {
+                "recipient": "+905361000000",
+                "type": "ARAMA",
+                "status": "ONAY"
+            }
+        ],
+        "legalTextConsents": [
+            {
+                "id": 10004,
+                "type": "kvkk",
+                "version": 1.01
+            },
+            {
+                "id": 10005,
+                "type": "acikriza",
+                "version": 1
+            },
+            {
+                "id": 100006,
+                "type": "etk",
+                "version": 1
+            }
+        ],
+        "branchAccess": [
+            1056,
+            1058
+        ]
     }
     ```
 
@@ -216,9 +255,15 @@ Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarıl
     }
     ```
 
+    ```bash {{ title: '404', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Belirtilen kişi bulunamadı"
+    }
+    ```
+
      ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
      {
-         "error": "Bilinmeyen hata"
+         "error": "Bilinmeyen hata. Lütfen istek gövdesini kontrol ediniz."
      }
      ```
 
