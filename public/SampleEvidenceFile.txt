@@ -1,0 +1,44 @@
+Ad Soyad
++905321000000
+destek@dijiizin.com
+
+REMOTE BİLGİLERİ
+
+IP:46.196.100.23
+
+USER AGENT:Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36
+
+REFERER:https://dijiizin.com/form/1
+
+LANGUAGE:tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7
+
+---------------------
+
+İşlem Tarih: 2023-03-08 12:20:38
+
+
+İznin Açıklaması: www.abc.com üzerinde ilerişim formu ile izin alındı
+İzin verilen URL:www.abc.com/iletisim-formu
+
+
+----ONAYLANAN KVKK METNİ----
+KVKK Aydınlatma Metni - versiyon:1
+Onay Metni : KVKK Metnini Okudum Onaylıyorum.
+----ONAYLANAN KVKK METNİ----
+
+----ONAYLANAN AÇIKRIZA METNİ----
+KVKK Açık Rıza Metni - versiyon:1
+Onay Metni : KVKK Açık Rıza Metnini Okudum Onaylıyorum.
+----ONAYLANAN AÇIKRIZA METNİ----
+
+----ONAYLANAN ETK METNİ----
+ETK Metni - versiyon:1
+Onay Metni : ETK Metnini Okudum Onaylıyorum. Pazarlama iletişimlerine izin veriyorum
+----ONAYLANAN ETK METNİ----
+
+
+
+Verilen Pazarlama İzinleri:
+BIREYSEL, ONAY, ARAMA
+BIREYSEL, ONAY, MESAJ
+BIREYSEL, ONAY, SMS

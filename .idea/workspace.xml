@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21e0a067-f97e-476b-87d4-cb83519e66f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/SampleEvidenceFile.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/izinli-veri-sorgulama/page.mdx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/hizli-baslangic/page.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/hizli-baslangic/page.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/izin-yonetimi/page.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/izin-alma/page.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navigation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RequestAddress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RequestAddress.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/tailwind.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +33,15 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2V9qHVqkab8NQBxVj4hktYtC4Uy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -61,11 +69,29 @@
       <workItem from="1694475241817" duration="4461000" />
       <workItem from="1694506167107" duration="4113000" />
       <workItem from="1694542844667" duration="42000" />
-      <workItem from="1694542899889" duration="175000" />
+      <workItem from="1694542899889" duration="897000" />
+      <workItem from="1694847559811" duration="72000" />
+      <workItem from="1694847653617" duration="4179000" />
+      <workItem from="1694860346820" duration="12692000" />
+      <workItem from="1694946569385" duration="6477000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

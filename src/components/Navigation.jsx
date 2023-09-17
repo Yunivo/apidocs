@@ -221,7 +221,8 @@ export const navigation = [
       { title: 'Hukuki Metinler', href: '/hukuki-metinler' },
 
       { title: 'Şube Yönetimi',  href: '/subeler' },
-      { title: 'İzin Yönetimi', href: '/izin-yonetimi' },
+      { title: 'İzin Alma', href: '/izin-alma' },
+      { title: 'İzinli Veri Sorgulama', href: '/izinli-veri-sorgulama' },
 
       { title: 'SMS Kampanyaları',  href: '/sms-kampanyalari' },
 

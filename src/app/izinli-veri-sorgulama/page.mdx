@@ -1,0 +1,241 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'İzin Yönetimi',
+  description:
+    'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.',
+}
+
+# İzinli Veri Sorgulama
+
+İzinli veri sorgulama ile Pazarlama izin durumları ve KVKK izinlerini sorgulayabilir, tam kapsamlı izinli pazarlama listenizi ve kvkk izinlilerin listesini edinebilirsiniz.
+
+
+
+<div className="not-prose">
+
+  <Button
+    href="#pazarlama-izinleri-sorgulama"
+    variant="text"
+    arrow="right"
+    children="Pazarlama izinleri sorgulama"
+  />
+</div>
+<div className="not-prose">
+  <Button
+      href="#kvkk-izinleri-sorgulama"
+      variant="text"
+      arrow="right"
+      children="Kvkk izinleri sorgulama"
+    />
+
+</div>
+
+---
+
+
+
+<Row>
+
+  <Col>
+  ## Pazarlama İzinleri Sorgulama  {{ parameter: 'GET' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/consents/{ConsentType}/{status}/list/{PageNumber}" />
+
+    ### Açıklama
+
+Bu method ile belirtilen `consentType` ve `status` değerleri ile birlikte veritabanınızdaki pazarlama izinlerini getirir. Method sayfalama (pagination) ile çalışır. Sayfa başına 1000 adet veri döndürülür.
+
+### Sorgu Parametreleri
+ <Properties>
+       <Property name="ConsentType " type="string" desc="zorunlu">
+         Bu parametre izin türünü belirtir.
+         Zorunlu değerler: `MESAJ`, `ARAMA`, `EPOSTA`
+         Değerlerinden biri endpoint içerisinde kullanılmalıdır.
+
+       </Property>
+       <Property name="status" type="date d-m-Y H:i:s " desc="zorunlu">
+       Bu parametre izin durumunu belirtir. Kabul edilebilir değerler
+       Zorunlu değerler: `ONAY`, `RET`
+       </Property>
+       <Property name="PageNumber" type="string">
+        Getirilecek sayfa numarasıdır. Varsayılan değeri 1'dir.
+       </Property>
+
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+### Başarılı Yanıt Açıklaması
+
+ <Table data={[
+     { "Parametre": "type", "Açıklama": "İzin türü (MESAJ, ARAMA, EPOSTA)" },
+     { "Parametre": "password", "Açıklama": "İzin durumu (ONAY, RET)" },
+     { "Parametre": "list", "Açıklama": "sorgulanan alıcı listesi" },
+     { "Parametre": "pagination.current_page", "Açıklama": "Bulunduğunuz sayfa numarası" },
+     { "Parametre": "pagination.last_page", "Açıklama": "Toplam sayfa sayısı" },
+     { "Parametre": "pagination.per_page", "Açıklama": "Her sayfadaki öğe sayısı." },
+     { "Parametre": "pagination.total_item", "Açıklama": "Toplam öğe sayısı" }
+   ]} />
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/consents/{ConsentType}/{status}/list/{PageNumber}' }}
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "type": "MESAJ",
+        "status": "ONAY",
+        "list": [
+            "+905361000000",
+            "+905411000001",
+            "+905411000002",
+            "+905411000003",
+        ],
+        "pagination": {
+            "current_page": 1,
+            "last_page": 1,
+            "per_page": 1000,
+            "total_item": 4
+        }
+    }
+
+
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '422', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "errors": [
+             {
+                 "code": "R006",
+                 "message": "consentType değeri hatalı"
+             },
+             {
+                 "code": "R005",
+                 "message": "status değeri hatalı"
+             }
+         ]
+     }
+     ```
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+---
+<Row>
+
+  <Col>
+  ## KVKK İzinleri Sorgulama  {{ parameter: 'GET' }}
+
+
+  ### Endpoint URL
+    <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/double-opt-in/consent" />
+
+    ### Açıklama
+
+Bu method ile SMS_OTP yöntemi ile izin alma işlemi başlatılabilir. Başarılı gerçekleşen istek sonrasında, 10 dakika içerisinde  [İzin İşlemi Onaylama](#izin-islemi-onaylama) işlemi gerçekleştirilmelidir. Aksi taktirde bu endpointe yeni istek göndererek yeni izin alma işlemi başlatılmalıdır. İzin işlemi başlatıldıktan sonra 1 ile 180 saniye arasında Girilen telefon numarasına ONAY SMS’i içerisinde 2 adet kod ve hukuki metinler gönderilecektir.
+
+### Parametreler
+ <Properties>
+
+       <Property name="requestId" type="string " desc="zorunlu">
+        Başarı ile gerçekleşen İzin İşlemi Başlatma metodu cevabından dönen isteğinize ait tanımlayıcı `uuid` değeridir.
+       </Property>
+       <Property name="kvkkCode" type="string" desc="zorunlu">
+        Kişinin telefonuna SMS ile gönderilen 1. Kod olan KVKK ONAY kodunda yazan değerdir. KVKK Onayı alınması için kullanılır. KVKK kodu olmadan kişi kaydı yapılamaz.
+       </Property>
+       <Property name="etkCode" type="string" desc="opsiyonel">
+        Kişinin telefonuna SMS ile gönderilen 2. Kod olan ETK ONAY kodunda yazan değerdir. ETK onay kodu ile pazarlama izinleri ve ETK metin izini kayıt edilir.
+       </Property>
+
+
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'POST','label':'https://api.dijiizin.com/api/V3/double-opt-in/consent/confirmation' }}
+    {
+        "requestId":"48f833a6-67ec-4647-96fc-3a7ce3c6d815",
+        "kvkkCode":"180546",
+        "etkCode":"184287"
+    }
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "status": "Kişi kayıt edildi",
+        "uuid": "bb844f8e-0286-480c-a20a-7684d2921234"
+    }
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+---
+
+
+
+
+---
+
+

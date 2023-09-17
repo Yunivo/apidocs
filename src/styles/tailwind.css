@@ -19,7 +19,25 @@
     margin-bottom:0 !important;
   }
 }
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-height: thin; /* Firefox */
 
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 2px; /* Webkit browsers */
+    height: 2px; /* Webkit browsers */
+
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* Webkit browsers */
+
+  }
+  .body.blur {
+
+  }
+}
 
 @tailwind base;
 @tailwind components;
