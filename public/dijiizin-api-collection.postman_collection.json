@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "12243284-8748-4488-a356-1acd6cace770",
+		"name": "Dijiizin API CollectionDOCS",
+		"description": "Dijiizin API, websitelerinizi, formlarınızı, CRM benzeri ERP programlarınızı, E ticaret sistemleriniz üzerinde KVKK, Açık Rıza ve ETK izinlerini alarak pazarlama izinlerinizi yönetmenize olanak sağlar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25827378"
+	},
+	"item": [
+		{
+			"name": "V3",
+			"item": [
+				{
+					"name": "Kimlik Doğrulama",
+					"item": [
+						{
+							"name": "Kimlik Doğrulama",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"username\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/V3/login",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hukuki Metinler",
+					"item": [
+						{
+							"name": "Hukuki Metin Listeleme",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"parametre\": 21\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/V3/legal/text/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"legal",
+										"text",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Hukuki Metin Sorgulama",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"parametre\": 21\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/V3/legal/text/632",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"legal",
+										"text",
+										"632"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Şubeler",
+					"item": [
+						{
+							"name": "Şube Listeleme",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/V3/brand/branch/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"brand",
+										"branch",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "İzin Ekleme",
+					"item": [
+						{
+							"name": "Single Opt In",
+							"item": [
+								{
+									"name": "İzin Alma İşlemi",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Environment\": \"HS_EORTAM\",\r\n  \"EvidenceFile\": \"a2FuxLF0IGnDp2VyacSfaQ==\",\r\n  \"EvidenceFileExtension\": \"txt\",\r\n  \"PersonalInfo\": {\r\n    \"Name\": \"Ahmet\",\r\n    \"Surname\": \"Öztürk\",\r\n    \"Phone\": \"5361000000\",\r\n    \"Email\": \"destek@dijiizin.com\"\r\n  },\r\n  \"ConsentTime\": \"27-12-2022 02:25:12\",\r\n  \"Description\": \"Dijiizin.com üzerinde yeni üyelik işlemi ile izin alındı\",\r\n  \"Url\": \"dijiizin.com/yeni-uyelik\",\r\n  \"DocumentConsents\": {\r\n    \"KVKK\": {\r\n      \"DocumentId\": 100005,\r\n      \"DocumentUrl\": \"https://demowebsite.com/kvkk\"\r\n    },\r\n    \"RIZA\": {\r\n      \"DocumentId\": 100006,\r\n      \"DocumentUrl\": \"http://demowebsite.com/acikriza\"\r\n    }\r\n  },\r\n  \"ContactConsents\": {\r\n    \"Type\": \"BIREYSEL\",\r\n    \"Sms\": \"ONAY\",\r\n    \"Call\": \"ONAY\",\r\n    \"Email\": \"ONAY\",\r\n    \"ETK\": {\r\n      \"DocumentId\": 100007,\r\n      \"DocumentUrl\": \"https://demowebsite.com/etk\"\r\n    }\r\n  }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_url}}/V3/single-opt-in/consent/add",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"V3",
+												"single-opt-in",
+												"consent",
+												"add"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Double Opt In",
+							"item": [
+								{
+									"name": "Onay İşlemi Başlatma",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Environment\": \"HS_EORTAM\",\r\n  \"PersonalInfo\": {\r\n    \"Name\": \"Ahmet\",\r\n    \"Surname\": \"Öztürk\",\r\n    \"Phone\": \"5361000000\",\r\n    \"Email\": \"destek@dijiizin.com\"\r\n  },\r\n  \"ConsentTime\": \"27-12-2022 02:25:12\",\r\n  \"Description\": \"Bu izin demowebsite.com üzerinden yeni üyelik sırasında ile alındı\",\r\n  \"Url\": \"https://demowebsite.com/yeni-uyelik\",\r\n  \"DocumentConsents\": {\r\n    \"KVKK\": {\r\n      \"DocumentId\": 10005,\r\n      \"DocumentUrl\": \"https://demowebsite.com/kvkk\"\r\n    },\r\n    \"RIZA\": {\r\n      \"DocumentId\": 10006,\r\n      \"DocumentUrl\": \"http://demowebsite.com/acikriza\"\r\n    }\r\n  },\r\n  \"ContactConsents\": {\r\n    \"Type\": \"BIREYSEL\",\r\n    \"Sms\": \"ONAY\",\r\n    \"Call\": \"ONAY\",\r\n    \"Email\": \"ONAY\",\r\n    \"ETK\": {\r\n      \"DocumentId\": 10007,\r\n      \"DocumentUrl\": \"https://demowebsite.com/etk\"\r\n    }\r\n  }\r\n  \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_url}}/V3/double-opt-in/consent",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"V3",
+												"double-opt-in",
+												"consent"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Onay İşlemi Tamamlama",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"requestId\":\"deda1234-c880-4e7c-ba5a-06d023279723\",\r\n    \"kvkkCode\":\"739318\",\r\n    \"etkCode\":\"739401\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_url}}/V3/double-opt-in/consent/confirmation",
+											"host": [
+												"{{api_url}}"
+											],
+											"path": [
+												"V3",
+												"double-opt-in",
+												"consent",
+												"confirmation"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "İzin Sorgulama",
+					"item": [
+						{
+							"name": "İzin Durumu Listeleme",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/V3/consents/{ConsentType}/{status}/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"consents",
+										"{ConsentType}",
+										"{status}",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Kişi Sorgulama",
+					"item": [
+						{
+							"name": "Kişi Sorgulama",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/V3/person/{uuid}",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"person",
+										"{uuid}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sms Gönderimi",
+					"item": [
+						{
+							"name": "Sms Gönderimi",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Title\": \"ONAYLANANBASLIK\",\r\n    \"Phone\": [\r\n        \"5368758466\"\r\n    ],\r\n    \"SendTime\":\"06-12-2022 09:30\",\r\n    \"Message\": \"TEST MESAJI\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/V3/sms/send/multiple",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"V3",
+										"sms",
+										"send",
+										"multiple"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
