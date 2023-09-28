@@ -223,6 +223,7 @@ export const navigation = [
       { title: 'Şube Yönetimi',  href: '/subeler' },
       { title: 'İzin Alma', href: '/izin-alma' },
       { title: 'İzinli Veri Sorgulama', href: '/izinli-veri-sorgulama' },
+      { title: 'Kişi Pazarlama İzinleri Güncelleme', href: '/kisi-izinleri-guncelleme' },
 
       { title: 'SMS Kampanyaları',  href: '/sms-kampanyalari' },
 

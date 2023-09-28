@@ -1,0 +1,247 @@
+import Table from '@/components/Table';
+import RequestAddress from '@/components/RequestAddress';
+export const metadata = {
+  title: 'Kişi Pazarlama İzinleri Güncelleme',
+  description:
+    'İzinli veri sorgulama ile Pazarlama izin durumları ve KVKK izinlerini sorgulayabilir, tam kapsamlı izinli pazarlama listenizi ve kvkk izinlilerin listesini edinebilirsiniz.',
+}
+
+# Kişiye Ait Pazarlama İzinleri Güncelleme
+
+Daha önce dijiizin.com veya Dijiizin API üzerinden kaydettiğiniz kişilerin izinlerini toplu ve tekil olarak güncellemek için aşağıdaki metodları kullanabilirsiniz.
+
+<div className="not-prose">
+
+  <Button
+    href="#tekil-izi-guncelleme"
+    variant="text"
+    arrow="right"
+    children="Tekil İzin Güncelleme"
+  />
+</div>
+<div className="not-prose">
+  <Button
+      href="#toplu-izin-guncelleme"
+      variant="text"
+      arrow="right"
+      children="Toplu İzin Güncelleme"
+    />
+
+</div>
+
+---
+<Row>
+
+  <Col>
+  ## Tekil İzin Güncelleme  {{ parameter: 'GET' }}
+
+
+    ### Endpoint URL
+        <RequestAddress method="GET" url="https://api.dijiizin.com/api/V3/person/{uuid}/consent/{type}/update/{status}" />
+
+    ### Açıklama
+    Bu metod, belirtilen UUID'ye sahip bir kişinin belirtilen türdeki izin durumunu günceller. Eğer işlem başarılı bir şekilde tamamlanırsa, güncellenen izin türü ve yeni durumu ile birlikte bir yanıt döner. İşlem başarısız olursa, hata kodu ve mesajı içeren bir hata yanıtı döner.
+
+### Parametreler
+ <Properties>
+
+       <Property name="uuid" type="string " desc="zorunlu">
+       İlgili kişinin eşsiz tanımlayıcısıdır. Başarılı izin alma işlemleri sonrasında döndürülür. (UUID) olarak kullanılır.
+       </Property>
+       <Property name="type" type="string" desc="zorunlu">
+       Güncellenmek istenen izin türünü belirtir. Bu parametre, isteğin URL'sinde yer alır ve izin güncelleme işleminin hangi tür izin üzerinde yapılacağını belirler.
+       Zorunlu değerler: `EPOSTA`, `MESAJ`, `ARAMA`
+       </Property>
+       <Property name="status" type="string" desc="zorunlu">
+       Bu parametre izin durumunu belirtir. Kabul edilebilir değerler
+       Zorunlu değerler: `ONAY`, `RET`
+       </Property>
+
+
+
+
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+    ### Not
+
+- 422 ile dönen hata içerisinde message içerisinde H174 ile başlayan kod dönüyor ise RET durumundaki bir izni RET olarak güncelleme çalışmıssınız demektir. Bu hata kodunu dikkate almayınız. İzin durumu zaten **RET durumundadır.**
+- ONAY durumundaki bir izin tekrar ONAY durumudna güncellenebilir.
+</Col>
+<Col sticky>
+
+    ```json {{ 'title': 'Örnek Request','tag':'GET','label':'https://api.dijiizin.com/api/V3/person/{uuid}/consent/{type}/update/{status}' }}
+
+    ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    {
+        "type": "MESAJ",
+        "status": "başarılı",
+        "message": "Kişi MESAJ izni ONAY durumunda güncellendi."
+    }
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '422', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "type": "MESAJ",
+         "status": "başarısız",
+         "errors": {
+             "code": "IYS003",
+             "message": "H174 İzin durumu (status) güncellemesi için farklı bir durum girilmelidir. İzin durumu: RET"
+         }
+     }
+     ```
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
+
+---
+<Row>
+
+  <Col>
+  ## Toplu İzin Güncelleme  {{ parameter: 'POST' }}
+
+
+    ### Endpoint URL
+        <RequestAddress method="POST" url="https://api.dijiizin.com/api/V3/person/{uuid}/consents/update" />
+
+    ### Açıklama
+    Bu metod, belirtilen UUID'ye sahip bir kişinin belirtilen türdeki izin durumunu toplu şekilde günceller. Eğer işlem başarılı bir şekilde tamamlanırsa, güncellenen izin türü ve yeni durumu ile birlikte bir yanıt döner. İşlem başarısız olursa, hata kodu ve mesajı içeren bir hata yanıtı döner.
+
+### Parametreler
+ <Properties>
+
+       <Property name="uuid" type="string " desc="zorunlu">
+       İlgili kişinin eşsiz tanımlayıcısıdır. Başarılı izin alma işlemleri sonrasında döndürülür. (UUID) olarak kullanılır. Parametre istek adresi içerisinde bulunmalıdır.
+       </Property>
+       <Property name="contactConsent" type="string" desc="zorunlu">
+        Toplu güncelleme işleminde kullanılır ve bir dizi içinde birden fazla izin güncelleme bilgisini içerir. Her bir izin güncelleme bilgisi, izin türü (type), yeni izin durumu (status) içerir.
+       </Property>
+       <Property name="type" type="string" desc="zorunlu">
+       Güncellenmek istenen izin türünü belirtir. Bu parametre, isteğin URL'sinde yer alır ve izin güncelleme işleminin hangi tür izin üzerinde yapılacağını belirler.
+       Zorunlu değerler: `EPOSTA`, `MESAJ`, `ARAMA`
+       </Property>
+       <Property name="status" type="string" desc="zorunlu">
+       Bu parametre izin durumunu belirtir. Kabul edilebilir değerler
+       Zorunlu değerler: `ONAY`, `RET`
+       </Property>
+
+
+
+
+
+     </Properties>
+---
+### Authorization
+
+    ```json
+       Authentication: Bearer <jeton>
+    ```
+
+    ### Not
+
+- 422 ile dönen hata içerisinde message içerisinde H174 ile başlayan kod dönüyor ise RET durumundaki bir izni RET olarak güncelleme çalışmıssınız demektir. Bu hata kodunu dikkate almayınız. İzin durumu zaten **RET durumundadır.**
+- ONAY durumundaki bir izin tekrar ONAY durumudna güncellenebilir.
+</Col>
+<Col sticky>
+
+
+    ```json {{ 'title': 'Örnek İstek Gövdesi','tag':'POST','label':'https://api.dijiizin.com/api/V3/person/{uuid}/consents/update/' }}
+    {
+       "contactConsents": [
+           {
+               "type": "MESAJ",
+               "status": "ONAY"
+           },
+           {
+               "type": "ARAMA",
+               "status": "ONAY"
+           },
+           {
+               "type": "EPOSTA",
+               "status": "ONAY"
+           }
+       ]
+    }
+        ```
+    <CodeGroup  title="Örnek Response" >
+
+    ```bash {{ title: '200', className:'focus:bg-green-700 focus:text-white active:bg-green-700 active:text-white text-green-700 border-green-700' }}
+    [
+        {
+            "type": "MESAJ",
+            "status": "başarılı",
+            "message": "Kişi MESAJ izni ONAY durumunda güncellendi."
+        },
+        {
+            "type": "ARAMA",
+            "status": "başarılı",
+            "message": "Kişi ARAMA izni ONAY durumunda güncellendi."
+        },
+        {
+            "type": "EPOSTA",
+            "status": "başarılı",
+            "message": "Kişi EPOSTA izni ONAY durumunda güncellendi."
+        }
+    ]
+    ```
+
+
+
+    ```bash {{ title: '401', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+    {
+        "error": "Eksik veya geçersiz jeton"
+    }
+    ```
+
+     ```bash {{ title: '422', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "type": "MESAJ",
+         "status": "başarısız",
+         "errors": {
+             "code": "IYS003",
+             "message": "H174 İzin durumu (status) güncellemesi için farklı bir durum girilmelidir. İzin durumu: RET"
+         }
+     }
+     ```
+     ```bash {{ title: '500', className:'focus:bg-red-600 focus:text-white active:bg-red-600 active:text-white text-red-600 border-red-600' }}
+     {
+         "error": "Bilinmeyen hata"
+     }
+     ```
+
+
+
+    </CodeGroup>
+
+
+  </Col>
+
+</Row>
