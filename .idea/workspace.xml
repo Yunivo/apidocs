@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21e0a067-f97e-476b-87d4-cb83519e66f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app/kisi-izinleri-guncelleme/page.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/kisi-izinleri-guncelleme/page.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/hizli-baslangic/page.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/hizli-baslangic/page.mdx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +72,8 @@
       <workItem from="1695021768747" duration="2046000" />
       <workItem from="1695126936154" duration="302000" />
       <workItem from="1695127327456" duration="1292000" />
-      <workItem from="1695938360072" duration="3213000" />
+      <workItem from="1695938360072" duration="3277000" />
+      <workItem from="1695982705840" duration="107000" />
     </task>
     <servers />
   </component>
